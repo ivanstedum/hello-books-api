@@ -25,6 +25,8 @@ def create_app(test_config = None):
         app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("SQLALCHEMY_TEST_DATABASE_URI")
     from app.models.book import Book
     from app.models.author import Author
+    from app.models.genre import Genre
+    from app.models.book_genre import Book_Genre
     db.init_app(app)
     migrate.init_app(app, db)
     
@@ -34,6 +36,11 @@ def create_app(test_config = None):
     
     from .book_routes import books_bp
     app.register_blueprint(books_bp)
+
+    from .genre_routes import genre_bp
+    app.register_blueprint(genre_bp)
+
+    
     #this import cant go to the top or else we will get a circular import error
 
     return app
